@@ -1,9 +1,15 @@
 import re
-from typing import Dict, List
+from typing import Dict, List, Optional
 import requests
-from lemonsqueezy.types.api import StoresResponse, UserResponse
+from lemonsqueezy.types.api import (
+    ProductResponse, ProductsResponse, StoreResponse, StoresResponse,
+    UserResponse
+)
 
-from lemonsqueezy.types.methods import GetStoresOptions, QueryApiOptions
+from lemonsqueezy.types.methods import (
+    GetProductOptions, GetProductsOptions, GetStoreOptions, GetStoresOptions,
+    QueryApiOptions
+)
 
 
 class LemonSqueezyError(Exception):
@@ -17,7 +23,7 @@ class LemonSqueezyError(Exception):
 
 
 class LemonSqueezy:
-    apiUrl = "https://api.lemonsqueezy.com/"
+    apiUrl = "https://api.lemonsqueezy.com"
 
     def __init__(self, api_key: str):
         """ LemonSqueezy API client
@@ -28,7 +34,7 @@ class LemonSqueezy:
         self.api_key = api_key
 
     def _build_params(
-        self, args: Dict[str, any], allowed_filters: List[str]
+        self, args: Dict[str, any], allowed_filters: Optional[List[str]]=[]
     ) -> Dict[str, any]:
         """ Builds a params object for the API query based on provided and
         allowed filters.
@@ -110,10 +116,72 @@ class LemonSqueezy:
         """
         return self._query({'path': 'v1/users/me'})
 
-    def getStores(self, params: GetStoresOptions={}) -> StoresResponse:
+    def get_stores(self, params: GetStoresOptions={}) -> StoresResponse:
+        """ Get stores
+
+        Args:
+            params (GetStoresOptions, optional). Defaults to {}.
+
+        Returns:
+            StoresResponse: JSON
+        """
         return self._query(
             {
                 'path': 'v1/stores',
                 'params': self._build_params(params)
             }
         )
+
+    def get_store(self, params: GetStoreOptions) -> StoreResponse:
+        """ Get store
+
+        Args:
+            params: GetStoreOptions.
+
+        Raises:
+            ValueError: If id is missing
+
+        Returns:
+            StoreResponse: JSON
+        """
+        id_ = params.pop('id', None)
+        if id_ is None:
+            raise ValueError('id is required')
+        return self._query(
+            {
+                'path': f'v1/stores/{id_}',
+                'params': self._build_params(params),
+            }
+        )
+
+    def get_products(self, params: GetProductsOptions={}) -> ProductsResponse:
+        """ Get products
+
+        Args:
+            params (GetProductsOptions, optional). Defaults to {}.
+
+        Returns:
+            ProductsResponse: JSON
+        """
+        return self._query({
+            'path': 'v1/products',
+            params: self._buildParams(params, ['storeId']),
+        });
+
+
+    def get_product(self, params: GetProductOptions) -> ProductResponse:
+        """ Get a product
+
+        Args:
+            params GetProductOptions.
+
+        Returns:
+            ProductResponse: JSON
+        """
+        id_ = params.pop('id', None)
+        if id_ is None:
+            raise ValueError('id is required')
+        return self._query({
+            'path': f'v1/products/{id_}',
+            params: self._buildParams(params),
+        });

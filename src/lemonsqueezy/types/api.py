@@ -83,3 +83,42 @@ class StoreObject(BaseApiObject):
 
 class StoresResponse(BaseListResponse):
   data: List[StoreObject]
+
+
+class StoreResponse(BaseIndividualResponse):
+  data: StoreObject
+
+
+ProductAttributes = TypedDict(
+    'ProductionAttributes',
+    {
+       'stored_id': int,
+       'name': str,
+       'slug': str,
+       'description': str,
+       'status': Literal['draft', 'publish'],
+       'status_formatted': Literal['Draft', 'Published'],
+       'thumb_url': Optional[str],
+       'large_thumb_url': Optional[str],
+       'price': int,
+       'price_formatted': str,
+       'from_price': Optional[int],
+       'to_price': Optional[int],
+       'pay_what_you_want': bool,
+       'buy_now_url': str,
+       'created_at': str,
+       'updated_at': str,
+       'test_mode': bool
+    }
+)
+
+
+class ProductObject(BaseApiObject):
+   attributes: ProductAttributes
+
+
+class ProductsResponse(BaseListResponse):
+    data: List[ProductObject]
+
+class ProductResponse(BaseIndividualResponse):
+    data: ProductObject
