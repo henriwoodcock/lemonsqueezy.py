@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lemonsqueezy"
+version = "0.0.1"
+authors = [
+  { name="Henri Woodcock", email="henriwoodcock@gmail.com" },
+]
+description = "Unofficial Python SDK for lemonsqueezy"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/henriwoodcock/lemonsqueezy.py"
+"Bug Tracker" = "https://github.com/henriwoodcock/lemonsqueezy.py/issues"
