@@ -1,4 +1,5 @@
-from http import HTTPStatus
+import re
+from typing import Dict, List
 import requests
 from lemonsqueezy.types.api import UserResponse
 
@@ -25,6 +26,39 @@ class LemonSqueezy:
             api_key (str): Your LemonSqueezy API key
         """
         self.api_key = api_key
+
+    def _build_params(
+        self, args: Dict[str, any], allowed_filters: List[str]
+    ) -> Dict[str, any]:
+        """ Builds a params object for the API query based on provided and
+        allowed filters.
+
+        Also converts pagination parameters `page` to `page[number]` and
+        `perPage` to `page[size]`
+
+        Args:
+            args (Dict[str, any]): Arguments to the API method
+            allowedFilters (List[str]): List of filters the API query permits
+                                        (camelCase)
+
+        Returns:
+            Dict[str, any]: Built params for query
+        """
+        params = {}
+        for filter_name in args:
+            if filter_name in allowed_filters:
+                query_filter = re.sub(
+                    r'(?<!^)(?=[A-Z])', '_', filter_name
+                ).lower()
+                params["filter[" + query_filter + "]"] = args[filter_name];
+            else:
+                if filter_name == 'include':
+                    params['include'] = args[filter_name]
+                elif filter_name == 'page':
+                    params['page[number]'] = args[filter_name]
+                elif filter_name == 'perPage':
+                    params['page[size]'] = args[filter_name]
+        return params;
 
     def _query(self, ops: QueryApiOptions) -> dict:
         """ Send an API query to the LemonSqueezy API
