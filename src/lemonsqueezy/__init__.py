@@ -1,9 +1,9 @@
 import re
 from typing import Dict, List
 import requests
-from lemonsqueezy.types.api import UserResponse
+from lemonsqueezy.types.api import StoresResponse, UserResponse
 
-from lemonsqueezy.types.methods import QueryApiOptions
+from lemonsqueezy.types.methods import GetStoresOptions, QueryApiOptions
 
 
 class LemonSqueezyError(Exception):
@@ -109,3 +109,11 @@ class LemonSqueezy:
             UserResponse: JSON
         """
         return self._query({'path': 'v1/users/me'})
+
+    def getStores(self, params: GetStoresOptions={}) -> StoresResponse:
+        return self._query(
+            {
+                'path': 'v1/stores',
+                'params': self._build_params(params)
+            }
+        )
