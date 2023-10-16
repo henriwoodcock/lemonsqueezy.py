@@ -165,7 +165,7 @@ class LemonSqueezy:
         """
         return self._query({
             'path': 'v1/products',
-            params: self._buildParams(params, ['storeId']),
+            'params': self._build_params(params, ['storeId']),
         });
 
 
@@ -183,5 +183,5 @@ class LemonSqueezy:
             raise ValueError('id is required')
         return self._query({
             'path': f'v1/products/{id_}',
-            params: self._buildParams(params),
+            'params': self._build_params(params),
         });

@@ -1,4 +1,5 @@
 from http import HTTPStatus
+
 from lemonsqueezy import LemonSqueezy
 from tests.utils import MockResponse
 
@@ -23,8 +24,7 @@ def test_get_user(ls: LemonSqueezy, api_key, mocker):
             reason='OK'
         )
     )
-    with mocked:
-        returned = ls.get_user()
+    returned = ls.get_user()
 
     assert returned == {'data': user}
 

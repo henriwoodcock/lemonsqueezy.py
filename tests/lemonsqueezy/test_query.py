@@ -173,8 +173,7 @@ def test_query_ok(
     mocked = mocker.patch(
         'lemonsqueezy.requests.request', return_value=MockResponse(**resp)
     )
-    with mocked:
-        returned = ls._query(ops)
+    returned = ls._query(ops)
     assert returned == None if is_delete else resp['json_data']
     kwargs = {
         'headers': {
@@ -242,7 +241,7 @@ def test_query_error(
     mocked = mocker.patch(
         'lemonsqueezy.requests.request', return_value=MockResponse(**resp)
     )
-    with mocked, pytest.raises(LemonSqueezyError) as exc:
+    with pytest.raises(LemonSqueezyError) as exc:
         ls._query(ops)
     assert exc.value.message == resp['reason']
     assert exc.value.errors == resp['json_data']['errors']

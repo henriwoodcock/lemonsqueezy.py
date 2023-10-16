@@ -5,7 +5,7 @@ BaseListResponse = TypedDict(
     'BaseListResponse',
     {
         'meta': dict,
-        'jsonapi': {'version': Literal['1.0']},
+        'jsonapi': Dict[Literal['version'], Literal['1.0']],
         'links': dict,
         'included': Optional[Dict[str, any]]
     }
@@ -15,7 +15,7 @@ BaseListResponse = TypedDict(
 BaseIndividualResponse = TypedDict(
     'BaseIndividualResponse',
     {
-        'jsonapi': {'version': Literal['1.0']},
+        'jsonapi': Dict[Literal['version'], Literal['1.0']],
         'links': dict,
         'included': Optional[Dict[str, any]]
     }
