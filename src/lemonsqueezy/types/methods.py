@@ -30,6 +30,7 @@ StoreInclude = Optional[
     ]
 ]
 
+
 class GetStoresOptions(PaginatedOptions):
     include: StoreInclude
 
@@ -48,7 +49,7 @@ ProductInclude = Optional[List[Literal['store', 'variants']]]
 
 class GetProductsOptions(PaginatedOptions):
     include: ProductInclude
-    storeId: int;
+    storeId: int
 
 
 GetProductOptions = TypedDict(

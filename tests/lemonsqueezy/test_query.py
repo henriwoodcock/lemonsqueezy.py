@@ -174,7 +174,7 @@ def test_query_ok(
         'lemonsqueezy.requests.request', return_value=MockResponse(**resp)
     )
     returned = ls._query(ops)
-    assert returned == None if is_delete else resp['json_data']
+    assert returned is None if is_delete else resp['json_data']
     kwargs = {
         'headers': {
             'Accept': 'application/vnd.api+json',

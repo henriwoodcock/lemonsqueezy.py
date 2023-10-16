@@ -82,11 +82,11 @@ class StoreObject(BaseApiObject):
 
 
 class StoresResponse(BaseListResponse):
-  data: List[StoreObject]
+    data: List[StoreObject]
 
 
 class StoreResponse(BaseIndividualResponse):
-  data: StoreObject
+    data: StoreObject
 
 
 ProductAttributes = TypedDict(
@@ -114,11 +114,12 @@ ProductAttributes = TypedDict(
 
 
 class ProductObject(BaseApiObject):
-   attributes: ProductAttributes
+    attributes: ProductAttributes
 
 
 class ProductsResponse(BaseListResponse):
     data: List[ProductObject]
+
 
 class ProductResponse(BaseIndividualResponse):
     data: ProductObject

@@ -51,4 +51,3 @@ def test_get_products(ls: LemonSqueezy, api_key, mocker):
     mocked.assert_called_once_with(
         'GET', f'{ls.apiUrl}/v1/products', **kwargs
     )
-

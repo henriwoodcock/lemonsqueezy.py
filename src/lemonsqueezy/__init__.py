@@ -34,7 +34,7 @@ class LemonSqueezy:
         self.api_key = api_key
 
     def _build_params(
-        self, args: Dict[str, any], allowed_filters: Optional[List[str]]=[]
+        self, args: Dict[str, any], allowed_filters: Optional[List[str]] = []
     ) -> Dict[str, any]:
         """ Builds a params object for the API query based on provided and
         allowed filters.
@@ -56,7 +56,7 @@ class LemonSqueezy:
                 query_filter = re.sub(
                     r'(?<!^)(?=[A-Z])', '_', filter_name
                 ).lower()
-                params["filter[" + query_filter + "]"] = args[filter_name];
+                params["filter[" + query_filter + "]"] = args[filter_name]
             else:
                 if filter_name == 'include':
                     params['include'] = args[filter_name]
@@ -64,7 +64,7 @@ class LemonSqueezy:
                     params['page[number]'] = args[filter_name]
                 elif filter_name == 'perPage':
                     params['page[size]'] = args[filter_name]
-        return params;
+        return params
 
     def _query(self, ops: QueryApiOptions) -> dict:
         """ Send an API query to the LemonSqueezy API
@@ -116,7 +116,7 @@ class LemonSqueezy:
         """
         return self._query({'path': 'v1/users/me'})
 
-    def get_stores(self, params: GetStoresOptions={}) -> StoresResponse:
+    def get_stores(self, params: GetStoresOptions = {}) -> StoresResponse:
         """ Get stores
 
         Args:
@@ -154,7 +154,7 @@ class LemonSqueezy:
             }
         )
 
-    def get_products(self, params: GetProductsOptions={}) -> ProductsResponse:
+    def get_products(self, params: GetProductsOptions = {}) -> ProductsResponse:
         """ Get products
 
         Args:
@@ -166,8 +166,7 @@ class LemonSqueezy:
         return self._query({
             'path': 'v1/products',
             'params': self._build_params(params, ['storeId']),
-        });
-
+        })
 
     def get_product(self, params: GetProductOptions) -> ProductResponse:
         """ Get a product
@@ -184,4 +183,4 @@ class LemonSqueezy:
         return self._query({
             'path': f'v1/products/{id_}',
             'params': self._build_params(params),
-        });
+        })
