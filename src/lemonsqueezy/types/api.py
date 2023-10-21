@@ -123,3 +123,51 @@ class ProductsResponse(BaseListResponse):
 
 class ProductResponse(BaseIndividualResponse):
     data: ProductObject
+
+
+IntervalOptions = Optional[Literal['day', 'week', 'month', 'year']]
+
+
+VariantAttributes = TypedDict(
+    'VariantAttributes',
+    {
+        'product_id': int,
+        'name': str,
+        'slug': str,
+        'description': str,
+        'price': int,
+        'is_subscription': bool,
+        'interval': IntervalOptions,
+        'interval_count': Optional[int],
+        'has_free_trial': bool,
+        'trial_interval': IntervalOptions,
+        'trial_interval_count': Optional[int],
+        'pay_what_you_want': bool,
+        'min_price': int,
+        'suggested_price': int,
+        'has_license_keys': bool,
+        'license_activation_limit': int,
+        'is_license_limit_unlimited': bool,
+        'license_length_value': Optional[int],
+        'license_length_unit': Optional[Literal['days', 'months', 'years',]],
+        'is_license_length_unlimited': bool,
+        'sort': int,
+        'status': Literal['pending', 'draft', 'published'],
+        'status_formatted': Literal['Pending', 'Draft', 'Published'],
+        'created_at': str,
+        'updated_at': str,
+        'test_mode': bool,
+    }
+)
+
+
+class VariantObject(BaseApiObject):
+    attributes: VariantAttributes
+
+
+class VariantsResponse(BaseListResponse):
+    data: List[VariantObject]
+
+
+class VariantResponse(BaseIndividualResponse):
+    data: VariantObject

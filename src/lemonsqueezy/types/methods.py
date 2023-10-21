@@ -59,3 +59,37 @@ GetProductOptions = TypedDict(
         'include': ProductInclude
     }
 )
+
+
+VariantInclude = Optional[List[Literal['product', 'files']]]
+
+
+class GetVariantsOptions(PaginatedOptions):
+    include: VariantInclude
+    productId: Optional[int]
+
+
+GetVariantOptions = TypedDict(
+    'GetVariantOptions',
+    {
+        'id': str,
+        'include': VariantInclude
+    }
+)
+
+
+PriceInclude = Optional[List[Literal['variant']]]
+
+
+class GetPricesOptions(PaginatedOptions):
+    include: PriceInclude
+    variantId: Optional[int]
+
+
+GetPriceOptions = TypedDict(
+    'GetPriceOptions',
+    {
+        'id': int,
+        'include': PriceInclude
+    }
+)

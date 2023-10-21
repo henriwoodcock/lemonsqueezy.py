@@ -3,11 +3,11 @@ from typing import Dict, List, Optional
 import requests
 from lemonsqueezy.types.api import (
     ProductResponse, ProductsResponse, StoreResponse, StoresResponse,
-    UserResponse
+    UserResponse, VariantResponse, VariantsResponse
 )
 
 from lemonsqueezy.types.methods import (
-    GetProductOptions, GetProductsOptions, GetStoreOptions, GetStoresOptions,
+    GetPriceOptions, GetPricesOptions, GetProductOptions, GetProductsOptions, GetStoreOptions, GetStoresOptions, GetVariantOptions, GetVariantsOptions,
     QueryApiOptions
 )
 
@@ -182,5 +182,54 @@ class LemonSqueezy:
             raise ValueError('id is required')
         return self._query({
             'path': f'v1/products/{id_}',
+            'params': self._build_params(params),
+        })
+
+    def get_variants(self, params: GetVariantsOptions = {}) -> VariantsResponse:
+        """ Get variants
+
+        Args:
+            params (GetVariantsOptions, optional): Defaults to {}.
+
+        Returns:
+            VariantsResponse: JSON
+        """
+        return self._query({
+            'path': 'v1/variants',
+            'params': self._build_params(params, ['productId']),
+        })
+
+    def get_variant(self, params: GetVariantOptions) -> VariantResponse:
+        """ Get a variant
+
+        Args:
+            params (GetVariantOptions).
+
+        Raises:
+            ValueError: If id is not provided
+
+        Returns:
+            VariantResponse: JSON
+        """
+        id_ = params.pop('id', None)
+        if id_ is None:
+            raise ValueError('id is required')
+        return self._query({
+            'path': f'v1/variants/{id_}',
+            'params': self._build_params(params),
+        })
+
+    def get_prices(self, params: GetPricesOptions = {}):
+        return self._query({
+            'path': 'v1/prices',
+            'params': self._buildParams(params, ["variantId"]),
+        })
+
+    def get_price(self, params: GetPriceOptions):
+        id_ = params.pop('id', None)
+        if id_ is None:
+            raise ValueError('id is required')
+        return self._query({
+            'path': f'v1/prices/{id_}',
             'params': self._build_params(params),
         })
